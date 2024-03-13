@@ -1,30 +1,23 @@
 package oy.tol.tra;
 
-/**
- * An implementation of the StackInterface.
- * <p>
- * TODO: Students, implement this so that the tests pass.
- * 
- * Note that you need to implement construtor(s) for your concrete StackImplementation, which
- * allocates the internal Object array for the Stack:
- * - a default constructor, calling the StackImplementation(int size) with value of 10.
- * - StackImplementation(int size), which allocates an array of Object's with size.
- *  -- remember to maintain the capacity and/or currentIndex when the stack is manipulated.
- */
+import java.util.Stack;
+
 public class StackImplementation<E> implements StackInterface<E> {
 
    private Object [] itemArray;
    private int capacity;
    private int currentIndex = -1;
    private static final int DEFAULT_STACK_SIZE = 10;
-
+   private static final int GROW_FACTOR = 2;
+  
    /**
     * Allocates a stack with a default capacity.
     * @throws StackAllocationException
     */
    public StackImplementation() throws StackAllocationException {
-      // TODO: call the constructor with size parameter with default size of 10.
-      
+   
+      this(DEFAULT_STACK_SIZE);  
+ 
    }
 
    /** TODO: Implement so that
@@ -35,51 +28,83 @@ public class StackImplementation<E> implements StackInterface<E> {
     * @throws StackAllocationException If cannot allocate room for the internal array.
     */
    public StackImplementation(int capacity) throws StackAllocationException {
-      
+      if (capacity < 2) {  
+         throw new StackAllocationException("Stack capacity must be at least 2.");  
+     }  
+     this.capacity = capacity;  
+     itemArray = new Object[capacity];  
    }
 
    @Override
    public int capacity() {
-      // TODO: Implement this
+      return capacity;
       
    }
 
    @Override
    public void push(E element) throws StackAllocationException, NullPointerException {
-      // TODO: Implement this
+      if (element == null) {
+         throw new NullPointerException("Cannot push null element to stack.");
+      }
+      if (currentIndex == capacity - 1) {  
+        
+         resize();  
+     }  
+     itemArray[++currentIndex] = element;  
                
    }
+   private void resize() throws StackAllocationException {  
+      capacity *= GROW_FACTOR;  
+      Object[] tempArray = new Object[capacity];  
+      System.arraycopy(itemArray, 0, tempArray, 0, currentIndex + 1);  
+      itemArray = tempArray;  
+  }  
 
    @SuppressWarnings("unchecked")
    @Override
-   public E pop() throws StackIsEmptyException {
-      
-   }
+   public E pop() throws StackIsEmptyException {  
+      if (currentIndex < 0) {    
+          throw new StackIsEmptyException("Stack is empty.");    
+      }    
+      E element = (E) itemArray[currentIndex--];  
+      itemArray[currentIndex + 1] = null; 
+      return element;  
+  }
+   
 
    @SuppressWarnings("unchecked")
    @Override
    public E peek() throws StackIsEmptyException {
-      
+      if (currentIndex < 0) {    
+         throw new StackIsEmptyException("Stack is empty.");    
+     }    
+     return (E) itemArray[currentIndex];  
+     
    }
 
    @Override
    public int size() {
-      // TODO: Implement this
+    
+      return currentIndex + 1;  
       
    }
 
    @Override
    public void clear() {
-      // TODO: Implement this
+
+      currentIndex = -1;
+      for (int i = 0; i < itemArray.length; i++) {  
+              itemArray[i] = null;  
+          }  
       
    }
 
    @Override
    public boolean isEmpty() {
-      // TODO: Implement this
+      return currentIndex < 0;  
       
    }
-
+ 
    @Override
    public String toString() {
       StringBuilder builder = new StringBuilder("[");
@@ -92,4 +117,5 @@ public class StackImplementation<E> implements StackInterface<E> {
       builder.append("]");
       return builder.toString();
    }
+   
 }
