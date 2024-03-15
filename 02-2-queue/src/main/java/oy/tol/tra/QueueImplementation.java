@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package oy.tol.tra;
 
 public class QueueImplementation<E> implements QueueInterface<E> {
@@ -152,3 +153,6 @@ public String toString() {
 }
 
 }
+=======
+
+>>>>>>> ee6c5572f53375fdb9adc250a1f850944166dd8e
