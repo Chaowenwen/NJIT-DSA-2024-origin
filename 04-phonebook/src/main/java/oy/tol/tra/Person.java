@@ -32,38 +32,35 @@ public class Person implements Comparable<Person> {
     }
 
     /**
-     * TODO: Implement the method below to return a hash value. It must be calculated from the
-     * first and last name of the person.
+     * Calculates hash value for the Person object based on first and last names.
      * 
      * @return Hash value of the person.
      */
     @Override
     public int hashCode() {
-        int hash = 5381;
-        // Implement hash function here.
+        int hash = 31;
+        String fallName = getFullName();
+        for (int i=0;i<fallName.length();i++){
+            hash = (hash * 31 +fallName.charAt(i));
+        }
         return hash;
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof Person) {
-            return this.getFullName().equals(((Person)other).getFullName());
-        }
-        return false;
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        Person person = (Person) other;
+        return firstName.equals(person.firstName) && lastName.equals(person.lastName);
     }
 
     /**
-     * Compares two persons, this and the other one.
-     * <p>
-     * In a phonebook, persons are identified by the last and first names.
-     * So if a person is the same or another, depends on if they have
-     * the same name. You can use String.compareTo in implementing this.
-     * <p>
-     * Return <0 if the person's full name (as string) is smaller than the other's.
-     * Return 0 if the full name is identical.
-     * Return >0 if the other persons full name is larger (as string).
-     * Note: String class also implements <code>compareTo()</code> you can use here.
-     * @returns Returns 0 if persons are the same otherwise depending on the full name, <0 or >0.
+     * Compares two persons based on their full names.
+     * 
+     * @param other The other Person object to compare to.
+     * @returns Returns 0 if the persons' full names are identical.
+     *          Returns a negative value if this person's full name is lexicographically less than the other person's.
+     *          Returns a positive value if this person's full name is lexicographically greater than the other person's.
      */
     @Override
     public int compareTo(Person other) {
