@@ -24,32 +24,14 @@ public class Grades {
     */
    public void reverse() {
      
-      int i = 0;
-      while(i < grades.length/2) {
-         int temp = grades[i];
-         grades[i] = grades[grades.length-i-1];
-         grades[grades.length-i-1] = temp;
-         i++;
-     }
+      Algorithms.reverse(grades);
    }
 
    /**
     * Sorts the array to ascending order.
     */
    public void sort() {
-      
-      boolean swapped;  
-      do {  
-          swapped = false;  
-          for (int i = 0; i < grades.length-1; i++) {  
-              if (grades[i] > grades[i+1]) {  
-                  int temp = grades[i];  
-                  grades[i] = grades[i+1];  
-                  grades[i+1] = temp;  
-                  swapped = true;  
-              }  
-          }  
-      } while (swapped);  
+    Algorithms.sort(grades);
   }
   
 
