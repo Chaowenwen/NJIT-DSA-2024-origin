@@ -31,8 +31,12 @@ public class Grades {
     * Sorts the array to ascending order.
     */
    public void sort() {
+<<<<<<< HEAD
       
       Algorithms.sort(grades);
+=======
+    Algorithms.sort(grades);
+>>>>>>> 16015b677f8ab5fbc7b150ff356cb24a70ec232f
   }
   
 

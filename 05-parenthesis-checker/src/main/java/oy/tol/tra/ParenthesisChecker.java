@@ -61,5 +61,48 @@ public class ParenthesisChecker {
       //         throw an exception, wrong kind of parenthesis were in the text (e.g. "asfa ( asdf } sadf")
       // if the stack is not empty after all the characters have been handled
       //   throw an exception since the string has more opening than closing parentheses.
+      int count = 0;  
+int i = 0; 
+while (i < fromString.length()) {  
+    char ch = fromString.charAt(i);  
+    if (ch == '(' || ch == '[' || ch == '{') {  
+        try {  
+            stack.push(ch);  
+            count++;  
+        } catch (Exception e) {  
+            throw new ParenthesesException("Failed to push", ParenthesesException.STACK_FAILURE);  
+        }  
+    } else if (ch == ')' || ch == ']' || ch == '}') {  
+        if (stack.isEmpty()) {  
+            throw new ParenthesesException("There are too many closing parenthesis", ParenthesesException.TOO_MANY_CLOSING_PARENTHESES);  
+        } else if (findMatch(stack.peek()) != ch) {  
+            System.out.println(stack.peek());  
+            throw new ParenthesesException("Wrong kind of parenthesis were in the text", ParenthesesException.PARENTHESES_IN_WRONG_ORDER);  
+        } else {  
+            stack.pop();  
+            count++;  
+        }  
+    }  
+    i++; 
+}  
+  
+if (!stack.isEmpty()) {  
+    throw new ParenthesesException("The string has more opening than closing parentheses.", ParenthesesException.TOO_FEW_CLOSING_PARENTHESES);  
+}  
+return count;
+    }
+
+       private static char findMatch(char parentheses){
+         switch (parentheses) {  
+            case '(':  
+                return ')';  
+            case '[':  
+                return ']';  
+            case '{':  
+                return '}';  
+            default:  
+                throw new IllegalArgumentException("Invalid parenthesis: " + parentheses);  
+        }  
    }
 }
+
