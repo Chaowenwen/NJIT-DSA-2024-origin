@@ -118,4 +118,8 @@ public class StackImplementation<E> implements StackInterface<E> {
       return builder.toString();
    }
    
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 673b7e59e98aefbace71cf886cc2d9dcb1e2db6b
